@@ -1032,7 +1032,7 @@ html.rm .pk-list,html.rm .pk-list li{transition:none}
   <div class="boot-brand"><span class="disp" data-t="brand.name">胡椒QAQ</span><span class="boot-line" data-t="loader.line"></span></div>
   <p class="boot-warn"><b>⚠ PHOTOSENSITIVITY</b> <span data-t="loader.warn"></span></p>
   <div class="boot-actions">
-    <button class="sw" id="bootSfx" role="switch" aria-checked="false"><span class="st" data-t="loader.sound">开启音效</span><span class="trk"></span></button>
+    <button class="sw" id="bootSfx" role="switch" aria-checked="true"><span class="st" data-t="loader.sound">界面音效</span><span class="trk"></span></button>
     <button class="btn btn--secondary btn--sm" id="bootSkip"><span class="lb" data-t="loader.skip">跳过 SKIP ▸</span></button>
   </div>
 </div>
@@ -1043,7 +1043,7 @@ html.rm .pk-list,html.rm .pk-list li{transition:none}
     <a class="nav-logo" href="#hero" data-go="hero" aria-label="胡椒QAQ 回到顶部"><svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true"><path d="M3 7 L29 4 L29 17 C29 25 22 29 16 29 C10 29 3 25 3 17Z" fill="var(--hi)"/><path class="eyes" d="M8 13 L14 12 L13 17Z M24 12 L18 13 L19 18Z" fill="var(--k)"/></svg><b>胡椒QAQ</b></a>
     <nav class="nav-list" id="navList" aria-label="章节导航"></nav>
     <div class="nav-r">
-      <button class="sw sw--sm" id="sfxSw" role="switch" aria-checked="false" data-tip="界面音效（默认关闭）· 与音乐静音互相独立"><span class="st">SFX</span><span class="trk"></span></button>
+      <button class="sw sw--sm" id="sfxSw" role="switch" aria-checked="true" data-tip="界面音效（默认开启）· 与音乐静音互相独立"><span class="st">SFX</span><span class="trk"></span></button>
       <div class="clock" id="navClock" role="timer" aria-label="当前时间">00:00:00</div>
       <button class="burger" id="burger" aria-label="打开菜单" aria-expanded="false" aria-controls="menu"><i></i><i></i><i></i></button>
     </div>
@@ -1172,7 +1172,7 @@ html.rm .pk-list,html.rm .pk-list li{transition:none}
           </div>
           <div class="vol-row">
             <button class="sw sw--sm" id="muteSw" role="switch" aria-checked="false" aria-label="音乐静音" data-tip="音乐静音（不影响界面音效）"><span class="st">MUTE</span><span class="trk"></span></button>
-            <label class="vol"><span class="mono">VOL</span><input class="rng" id="vol" type="range" min="0" max="100" value="70" aria-label="音乐音量"></label>
+            <label class="vol"><span class="mono">VOL</span><input class="rng" id="vol" type="range" min="0" max="100" value="35" aria-label="音乐音量"></label>
           </div>
           <p class="mono note" id="vizNote"></p>
           <p class="mono note" data-t="music.note"></p>
@@ -1340,7 +1340,7 @@ html.rm .pk-list,html.rm .pk-list li{transition:none}
 const THEME = {
   brand:{ name:'胡椒QAQ', real:'王君煌', zh:'一个工程师，把自己拆了重装成 AI 产品经理。', tagline:'面具 · MASK' },
   a11y:{ skip:'跳到主要内容' },
-  loader:{ summon:'唤出面具', line:'把模糊的东西，做清楚', warn:'本页含闪白、频闪与快速切换画面。若感到不适请点「跳过」，或在页脚打开「减少动态」。', sound:'开启音效', skip:'跳过 SKIP ▸' },
+  loader:{ summon:'唤出面具', line:'把模糊的东西，做清楚', warn:'本页含闪白、频闪与快速切换画面。若感到不适请点「跳过」，或在页脚打开「减少动态」。', sound:'界面音效', skip:'跳过 SKIP ▸' },
   nav:[
     {id:'hero',    zh:'名片', en:'CARD'},
     {id:'steps',   zh:'履历', en:'STORY'},
@@ -1402,9 +1402,9 @@ const THEME = {
   music:{ eyebrow:'音乐 · TURNTABLE', title:'我的唱片机', lead:'点封面切歌，点播放才会出声（默认不自动播放）。', reasonLabel:'这首歌里的我：', reasonEmpty:'（待补：这首歌里的我）',
     note:'音乐与界面音效是两个独立开关：导航栏 SFX = 界面音效；这里的静音 / 音量 = 音乐。音乐片段仅作个人展示，版权归原作者所有。',
     tracks:[
+      {title:'Color Your Night',      src:'assets/03.mp3', cover:'assets/03.jpg', dur:80,  reason:'', stage:null},
       {title:'All Alone With You',    src:'assets/01.mp3', cover:'assets/01.jpg', dur:60,  reason:'', stage:null},
       {title:'Beautiful Things Remix',src:'assets/02.mp3', cover:'assets/02.jpg', dur:74,  reason:'', stage:null},
-      {title:'Color Your Night',      src:'assets/03.mp3', cover:'assets/03.jpg', dur:80,  reason:'', stage:null},
       {title:'Luv (sic.) pt3',        src:'assets/04.mp3', cover:'assets/04.jpg', dur:50,  reason:'', stage:null},
       {title:'One Last Kiss',         src:'assets/05.mp3', cover:'assets/05.jpg', dur:124, reason:'', stage:null},
       {title:'下水道蚂蚁',             src:'assets/06.mp3', cover:'assets/06.jpg', dur:105, reason:'', stage:null}
@@ -1512,8 +1512,8 @@ MT.split=function(el,step){
   if(step)el.style.setProperty('--cd',step+'ms');
 };
 
-/* ---- Web Audio：UI 合成音效（默认关闭，用户点击开关后才创建 AudioContext）---- */
-const A=MT.audio={ctx:null,on:false,master:null,sfxBus:null,playerBus:null,
+/* ---- Web Audio：UI 合成音效默认开启；首次点击/按键后创建 AudioContext，遵守浏览器声音策略 ---- */
+const A=MT.audio={ctx:null,on:true,master:null,sfxBus:null,playerBus:null,
   ensure(){
     if(!this.ctx){const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return null;
       this.ctx=new AC();this.master=this.ctx.createGain();this.master.gain.value=.9;
@@ -1522,7 +1522,7 @@ const A=MT.audio={ctx:null,on:false,master:null,sfxBus:null,playerBus:null,
       this.playerBus=this.ctx.createGain();this.playerBus.gain.value=.6;this.playerBus.connect(this.master);
       this.analyser=this.ctx.createAnalyser();this.analyser.fftSize=128;this.analyser.smoothingTimeConstant=.78;this.playerBus.connect(this.analyser);
       const n=this.ctx.createBuffer(1,this.ctx.sampleRate*2,this.ctx.sampleRate),d=n.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;this.noiseBuf=n;}
-    if(this.ctx.state==='suspended')this.ctx.resume();return this.ctx;}
+    if(this.ctx.state==='suspended')this.ctx.resume().catch(()=>{});return this.ctx;}
 };
 function tone(f,dur,type='square',vol=.07,when=0,slide=0){const c=A.ctx,t=c.currentTime+when,o=c.createOscillator(),g=c.createGain();o.type=type;o.frequency.setValueAtTime(f,t);if(slide)o.frequency.linearRampToValueAtTime(Math.max(30,f+slide),t+dur);g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.0008,t+dur);o.connect(g);g.connect(A.sfxBus);o.start(t);o.stop(t+dur+.02)}
 function noise(dur,vol,type='bandpass',f=1800,f2=null,when=0){const c=A.ctx,t=c.currentTime+when,s=c.createBufferSource();s.buffer=A.noiseBuf;const b=c.createBiquadFilter();b.type=type;b.frequency.setValueAtTime(f,t);if(f2)b.frequency.exponentialRampToValueAtTime(f2,t+dur);b.Q.value=1.2;const g=c.createGain();g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.0008,t+dur);s.connect(b);b.connect(g);g.connect(A.sfxBus);s.start(t,Math.random());s.stop(t+dur+.02)}
@@ -1540,8 +1540,12 @@ const SFX={
   shadow:()=>{noise(.6,.1,'lowpass',2800,200);tone(55,.7,'sawtooth',.07,0,-20)},
   toggle:()=>tone(660,.05,'square',.06)
 };
-MT.sfx=name=>{if(!A.on)return;if(!A.ensure())return;try{SFX[name]&&SFX[name]()}catch(e){}};
-MT.setSfx=function(v,silent){A.on=!!v;if(v)A.ensure();$$('#sfxSw,#bootSfx,#menuSfx').forEach(s=>s.setAttribute('aria-checked',v));if(!silent){MT.toast(v?THEME.toast.sfxOn:THEME.toast.sfxOff,{kind:'k'});if(v)SFX.confirm()}};
+MT.sfx=name=>{if(!A.on||!A.ctx)return;try{const ctx=A.ensure();if(ctx&&ctx.state==='running')SFX[name]&&SFX[name]()}catch(e){}};
+MT.setSfx=function(v,silent){A.on=!!v;if(v)A.ensure();$$('#sfxSw,#bootSfx,#menuSfx').forEach(s=>s.setAttribute('aria-checked',v));if(!silent){MT.toast(v?THEME.toast.sfxOn:THEME.toast.sfxOff,{kind:'k'});if(v)MT.sfx('confirm')}};
+// 只解锁声音；加载期间被浏览器阻止的音效不排队，避免首次交互时集中响起。
+const unlockAudio=()=>{if(A.on)A.ensure()};
+document.addEventListener('pointerdown',unlockAudio,{passive:true});
+document.addEventListener('keydown',unlockAudio);
 let lastH=0;
 document.addEventListener('pointerover',e=>{const t=e.target.closest&&e.target.closest('.btn,.nav-i,.track,.arc,.plan,.seg>button,.acc-h,button.tag,.sw,.big-sw,.rail-t,#menuList button');if(!t||t===lastH)return;lastH=t;MT.sfx('hover')},{passive:true});
 document.addEventListener('pointerout',e=>{if(!e.relatedTarget)lastH=0},{passive:true});
@@ -1905,7 +1909,7 @@ MT.initHero=initHero;MT.initSteps=initSteps;MT.initCards=initCards;MT.updateStep
 const {$,$$,clamp,THEME}=MT;
 const M=THEME.music,A=MT.audio,T=M.tracks;
 const S={idx:0,playing:false,dragging:false,viz:'idle',an:null,zero:0,tried:false};
-const au=new Audio();au.preload='metadata';au.volume=.7;
+const au=new Audio();au.preload='metadata';au.volume=.35;
 const fmt=s=>{s=Math.max(0,Math.floor(s||0));return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`};
 const len=()=>isFinite(au.duration)&&au.duration>0?au.duration:(T[S.idx].dur||0);
 const STAGE=['','幕一','幕二','幕三','幕四'];
